@@ -1,0 +1,241 @@
+% Source: https://www.sharelatex.com/templates/thesis/stockholm-university-phd-thesis
+% This is a rework that moves the config in to a style file rather than a class file.
+% This should in theory make it easier to insert it and remove it at will.
+%
+% The nomenclature packages is exchanged for the glossories package
+
+\usepackage{mathptmx} % Default font for dissertations is Times.
+%\usepackage{fourier} % If mathematics don't display well using Times, then use Fourier.
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[sort,compress]{natbib}
+\usepackage{multicol} % for pages with multiple text columns, e.g. References
+\setlength{\columnsep}{20pt} % space between columns; default 10pt quite narrow
+\usepackage[nottoc]{tocbibind} % correct page numbers for bib in TOC, nottoc suppresses an entry for TOC itself
+\usepackage{fancyhdr} % for better header layout
+\usepackage{easySymbols}
+\usepackage{enumerate}
+
+\usepackage{ifpdf}
+\ifpdf
+\usepackage[pdftex]{graphicx}
+\usepackage[ pdftex, plainpages = false, pdfpagelabels,
+pdfpagelayout = useoutlines,
+bookmarks,
+bookmarksopen = true,
+bookmarksnumbered = true,
+breaklinks = true,
+linktocpage,
+pagebackref,
+colorlinks = true,  % was true
+linkcolor = black,
+urlcolor  = blue,
+citecolor = red,
+anchorcolor = green,
+hyperindex = true,
+hyperfigures
+]{hyperref}
+
+\DeclareGraphicsExtensions{.png, .jpg, .jpeg, .pdf} %GIF doesn't work
+\else
+\usepackage{graphicx}
+\usepackage[ plainpages = false,
+pdfpagelabels,
+pdfpagelayout = useoutlines,
+bookmarks,
+bookmarksopen = true,
+bookmarksnumbered = true,
+breaklinks = true,
+linktocpage,
+pagebackref,
+colorlinks = true,  % was true
+linkcolor = black,
+urlcolor  = blue,
+citecolor = red,
+anchorcolor = green,
+hyperindex = true,
+]{hyperref}
+\fi
+\pdfcompresslevel=9
+\graphicspath{{./img/}{./figure/}}
+\usepackage{breakurl}
+
+
+% macros
+\renewcommand\boldsymbol[1]{\pmb{#1}}
+\DeclareFixedFont{\timesEightteen}{\encodingdefault}{\sfdefault}{\seriesdefault}{\shapedefault}{17\p@}
+
+% \renewcommand{\chaptername}{}
+% Removing the "Chapter n" text an replacing it by a single number.
+\def\@makechapterhead#1{%
+  \vspace{0\p@}%
+  {\parindent \z@ \raggedright \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      % Skipping the "Chapter n" text
+      \if@mainmatter
+        \baselineskip=20pt\rightskip 2cm plus 3cm\huge\thechapter.\hspace{0.5em}% Chapterpoint added.
+      \fi
+    \fi
+    \huge #1\par\nobreak
+    \vskip 84\p@
+  }}
+\def\@makeschapterhead#1{%
+  \vspace*{0\p@}%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \interlinepenalty\@M
+    \huge  #1\par\nobreak
+    \vskip 84\p@
+  }}
+
+
+%:-------------------------- Glossary/Abbrev./Symbols -----------------------
+\usepackage[toc]{glossaries} % https://en.wikibooks.org/wiki/LaTeX/Glossary
+% \renewcommand{\nomlabel}[1]{\textbf{#1}} % make abbreviations bold
+\makeglossaries
+\newcommand{\g}{\footnote{For all abbreviations see the glossary on page \pageref{nom}.}} % type "\g" to refer to glossary
+
+
+
+%:-------------------------- page layout -----------------------
+
+% S5 settings (default)
+
+\geometry{paperheight=242mm,paperwidth=165mm}
+\geometry{left=22.5mm,right=22.5mm}
+\geometry{top=22.5mm,bottom=22.5mm}
+
+
+% Make all headlines non-fat
+\def\section{\@startsection {section}{1}{\z@}{-3.5ex plus -1ex minus
+    -.2ex}{2.3ex plus .2ex}{\Large}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{-3.25ex plus -1ex minus
+   -.2ex}{1.5ex plus .2ex}{\large}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{-3.25ex plus
+-1ex minus -.2ex}{1.5ex plus .2ex}{\normalsize}}
+
+
+% FRONTMATTER
+% No page numbering until chapter 1
+
+\newcommand{\frontmatterSU}{
+  \frontmatter
+  \pagestyle{empty}
+  \fancypagestyle{plain}{
+    \fancyhead{}
+    \fancyfoot{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+  }
+}
+
+% MAINMATTER
+\newcommand{\mainmatterSU}{
+  \begingroup
+  \cleardoublepage
+  \edef\x{\endgroup
+    \noexpand\mainmatter
+    \setcounter{page}{\the\value{page}}%
+  }%
+  \x
+
+  \cleardoublepage
+
+  \fancypagestyle{plain}
+  {
+    \fancyhead{}
+    \fancyfoot[LE,RO]{{\fontfamily{verdana}\selectfont\thepage}}
+  }	% re-define plain page
+
+  \pagestyle{fancy}
+  \fancyhf{}
+  \fancyfoot[LE,RO]{{\fontfamily{verdana}\selectfont\thepage}}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+
+% BACKMATTER
+\newcommand{\backmatterSU}{
+
+  \backmatter
+  \renewcommand{\thepage}{\roman{page}}
+  %
+  \pagestyle{empty}
+  \fancypagestyle{plain}{
+    \fancyhead{}
+    \fancyfoot{}
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}
+  }
+}
+
+
+% DECLARATIONS
+% These macros are used to declare arguments needed for the
+% construction of the title page and other preamble.
+
+% Subtitle
+\def\subtitle#1{\gdef\@subtitle{#1}}
+% Defining the crest
+\def\crest#1{\gdef\@crest{#1}}
+
+% These macros define an environment for front matter that is always
+% single column even in a double-column document.
+
+\newenvironment{alwayssingle}{%
+       \@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+       \else\newpage\fi}
+       {\if@restonecol\twocolumn\else\newpage\fi}
+
+%Halftitlepage
+\newcommand{\halftitlepage}%
+{
+\thispagestyle{empty}
+    \noindent
+     {\large \@title~-- \@subtitle\\}\\
+     \noindent
+     {\Large\@author}
+\cleardoublepage
+}
+
+\crest{\includegraphics[width=25mm]{SU-Logga}}
+
+% define title page layout
+\renewcommand{\maketitle}{
+    \renewcommand{\footnotesize}{\small}
+    \renewcommand{\footnoterule}{\relax}
+    \thispagestyle{empty}
+{\large \vspace*{0mm} \hspace*{90mm} {{\@crest} \par} } % Move the logo
+    { \Huge \vspace*{30mm}{\noindent}{\@title} \par \vspace*{4mm}}
+    {\large {\noindent}{\@subtitle} \par \vspace*{8mm}}
+    {{\LARGE {\noindent}\@author} \par}
+  \null\vfill
+}
+
+% page number for cover back side should have page number blanked
+
+
+%:-------------------------- front matter layout -----------------------
+
+% ABSTRACT
+%
+\newenvironment{abstracts} { \pagestyle{empty}
+\let\cleardoublepage\clearpage
+\chapter{Abstract}
+}
+
+
+
+% DEDICATION
+%
+% The dedication environment makes sure the dedication gets its
+% own page and is set out in verse format.
+
+\newenvironment{dedication}
+{
+  \phantom{.}
+  \vspace{13cm}
+  \begin{quote} \begin{flushright}}
+{\end{flushright} \end{quote}}
