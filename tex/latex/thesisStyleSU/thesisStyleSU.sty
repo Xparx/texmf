@@ -11,15 +11,19 @@
 % \usepackage[T1]{fontenc}
 \usepackage[english,swedish]{babel}
 \usepackage[sort,compress]{natbib}
+
 \usepackage{multicol} % for pages with multiple text columns, e.g. References
 \setlength{\columnsep}{20pt} % space between columns; default 10pt quite narrow
 \usepackage[nottoc]{tocbibind} % correct page numbers for bib in TOC, nottoc suppresses an entry for TOC itself
 \usepackage{fancyhdr} % for better header layout
+\usepackage[margin=10pt,font=small,labelfont=bf]{caption} % for improved layout of figure captions with extra margin, smaller font than text
+
 \usepackage{easySymbols}
 \usepackage{enumerate}
 
 \usepackage{ifpdf}
 \ifpdf
+\usepackage{epstopdf} % converts eps figures to pdf
 \usepackage[pdftex]{graphicx}
 \usepackage[ pdftex, plainpages = false, pdfpagelabels,
 pdfpagelayout = useoutlines,
@@ -67,7 +71,7 @@ hyperindex = true,
 \renewcommand\boldsymbol[1]{\pmb{#1}}
 \DeclareFixedFont{\timesEightteen}{\encodingdefault}{\sfdefault}{\seriesdefault}{\shapedefault}{17\p@}
 
-% \renewcommand{\chaptername}{}
+
 % Removing the "Chapter n" text an replacing it by a single number.
 \def\@makechapterhead#1{%
   \vspace{0\p@}%
@@ -89,13 +93,6 @@ hyperindex = true,
     \huge  #1\par\nobreak
     \vskip 84\p@
   }}
-
-
-%:-------------------------- Glossary/Abbrev./Symbols -----------------------
-\usepackage[toc]{glossaries} % https://en.wikibooks.org/wiki/LaTeX/Glossary
-% \renewcommand{\nomlabel}[1]{\textbf{#1}} % make abbreviations bold
-\makeglossaries
-\newcommand{\g}{\footnote{For all abbreviations see the glossary on page \pageref{nom}.}} % type "\g" to refer to glossary
 
 
 
