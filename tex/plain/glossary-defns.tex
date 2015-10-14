@@ -1,0 +1,132 @@
+% This file adds glossaries of interest
+%
+% documentation: file:///usr/share/doc/texlive-doc/latex/glossaries/glossaries-user.html
+% or if running emacs: C-c ? glossaries-user RET
+% https://en.wikibooks.org/wiki/LaTeX/Glossary
+%
+%:-------------------------- Glossary/Abbrev./Symbols -----------------------
+%
+% Usage: add the following lines to the premiable of the file
+% \usepackage[toc,acronym]{glossaries}
+% \makeglossaries
+% \loadglsentries{glossary-list}
+%
+% % to print a glossary anywhere add the line
+% \printglossaries
+%
+% % to print a separate acronyms list with specific title.
+% \printacronyms[title=Abbreviations]
+%
+
+% Dual entries with reference to a glosssary entry from an acronym
+\usepackage{xparse} % for dual entry simplification
+\DeclareDocumentCommand{\newdualentry}{ O{} O{} m m m m } {
+  \newglossaryentry{gls-#3}{name={#5},text={#5\glsadd{#3}},
+    description={#6},#1
+  }
+  \newacronym[see={[Glossary:]{gls-#3}},#2]{#3}{#4}{#5\glsadd{gls-#3}}
+}
+
+%% Template for dual entry
+% \newdualentry{OWD} % label
+% {OWD}              % abbreviation
+% {One-Way Delay}    % long form
+% {The time a packet uses through a network from one host to another} % description
+
+% Acronyms
+\newacronym{grn}{GRN}{Gene Regulatory Network}
+\newacronym{snr}{SNR}{Signal to Noise Ratio}
+\newacronym{bic}{BIC}{Bayesian information criterion}
+\newacronym{aic}{AIC}{Akaike information criterion}
+\newacronym{rss}{RSS}{residual sum of squares}
+\newacronym{cls}{CLS}{constrained least squares}
+\newacronym{ols}{OLS}{ordinary least squares}
+\newacronym{lsco}{LSCO}{least squares cut-off}
+\newacronym{ode}{ODE}{ordinary differential equation}
+\newacronym{tp}{TP}{true positive}
+\newacronym{fp}{FP}{false positive}
+\newacronym{tn}{TN}{true negative}
+\newacronym{fn}{FN}{false negative}
+\newacronym{auroc}{AUROC}{area under receiver operator curve}
+\newacronym{aupr}{AUPR}{area under precision recall curve}
+\newacronym{ffl}{FFL}{feed forward loop}
+\newacronym{cv}{CV}{cross validation}
+\newacronym{tf}{TF}{transcription factor}
+\newacronym{ls}{LS}{least squares}
+\newacronym{tls}{TLS}{total least squares}
+\newacronym{svm}{SVM}{support vector machine}
+
+
+% Glossaries
+\newglossaryentry{dream}
+{
+  name=DREAM,
+  description ={Dialogue on Reverse Engineering Assessment and Methods},
+}
+\newglossaryentry{glmnet}
+{
+  name=Glmnet,
+  description={A fast implementation of the algorithms \gls{lasso}, \emph{ridge regression} and the combination of the previous called \emph{elastic net}},
+}
+\newglossaryentry{ss}
+{
+  name={steady state},
+  description={The state of the system where it does not experience any changing in time. Where the state variables $\dot{\bx}=0$.},
+}
+
+\newglossaryentry{ssd}
+{
+  name={steady state data},
+  description={Data collected when a system is in steady state. Typically after an a change have been induced and the system has converged.},
+  see={ss},
+}
+\newglossaryentry{tsd}
+{
+  name={time series data},
+  description={Data collected at different time points during the evolution of a dynamic system.},
+}
+
+\newglossaryentry{insilico}
+{
+  name={\insilico},
+  description={From latin meaning ``in silicon'', meaning run on a computer},
+}
+
+\newglossaryentry{invivo}
+{
+  name={\invivo},
+  description={From latin meaning ``in the living'', meaning experimentation done on living systems},
+}
+
+% Dual entries
+\newdualentry{lasso}
+{LASSO}
+{Least Absolute Shrinkage and Selection Operator}
+{A regression method that penalizes the absolute values of the model parameters.\cite{Tibshirani1996}}
+
+\newdualentry{rni}
+{RNI}
+{Robust Network Inference}
+{A conservative network inference approach that tests all possible networks and selects parameters based on if the parameter is included in all networks that can explain the data with a given confidence\cite{Nordling2013phdthesis}.}
+
+% Symbols
+\newglossaryentry{chi2}
+{
+  name={\ensuremath{\chi^2}},
+  description={the chi-square distribution},
+  sort=chi2
+}
+\newglossaryentry{k}
+{
+  name={condition number},
+  symbol={\ensuremath{\kappa}},
+  description={describes how ill-conditioned a system is.},
+  sort=k
+}
+\newglossaryentry{sigma}
+{
+  name={singular value},
+  symbol={\ensuremath{\sigma}},
+  description={represent the variation along the principal vectors.},
+  sort=sigma
+}
