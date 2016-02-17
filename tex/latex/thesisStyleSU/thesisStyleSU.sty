@@ -1,22 +1,25 @@
 % Source: https://www.sharelatex.com/templates/thesis/stockholm-university-phd-thesis
 % This is a rework that moves the config in to a style file rather than a class file.
-% This should in theory make it easier to insert it and remove it at will.
+% This should in theory make it easier to insert it and remove it at will and add and remove packages.
 %
 % The nomenclature packages is exchanged for the glossories package
 
-\usepackage{mathptmx} % Default font for dissertations is Times.
-%\usepackage{fourier} % If mathematics don't display well using Times, then use Fourier.
+% \usepackage{mathptmx} % Default font for dissertations is Times.
+% \usepackage{fourier} % If mathematics don't display well using Times, then use Fourier.
 \usepackage{geometry}
 \usepackage[utf8]{inputenc}
-% \usepackage[T1]{fontenc}
 \usepackage[english,swedish]{babel}
 \usepackage[sort,compress]{natbib}
+\usepackage{calligra} % For the dedication
 
 \usepackage{multicol} % for pages with multiple text columns, e.g. References
 \setlength{\columnsep}{20pt} % space between columns; default 10pt quite narrow
 \usepackage[nottoc]{tocbibind} % correct page numbers for bib in TOC, nottoc suppresses an entry for TOC itself
 \usepackage{fancyhdr} % for better header layout
 \usepackage[margin=10pt,font=small,labelfont=bf]{caption} % for improved layout of figure captions with extra margin, smaller font than text
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{adjustbox}
 
 \usepackage{easySymbols}
 \usepackage{enumerate}
@@ -24,28 +27,29 @@
 \usepackage{ifpdf}
 \ifpdf
 \usepackage{epstopdf} % converts eps figures to pdf
-\usepackage[pdftex]{graphicx}
-\usepackage[ pdftex, plainpages = false, pdfpagelabels,
+\usepackage{graphicx}
+\usepackage[pdftex, plainpages = false, pdfpagelabels,
 pdfpagelayout = useoutlines,
 bookmarks,
 bookmarksopen = true,
 bookmarksnumbered = true,
 breaklinks = true,
 linktocpage,
-pagebackref,
+% pagebackref,
 colorlinks = true,  % was true
-linkcolor = black,
-urlcolor  = blue,
-citecolor = red,
-anchorcolor = green,
+% linkcolor = black,
+% urlcolor  = blue,
+% citecolor = red,
+% anchorcolor = green,
 hyperindex = true,
-hyperfigures
+hyperfigures,
+hidelinks % Comment if links should be visible
 ]{hyperref}
 
-\DeclareGraphicsExtensions{.png, .jpg, .jpeg, .pdf} %GIF doesn't work
+\DeclareGraphicsExtensions{.png, .jpg, .jpeg, .pdf} % GIF doesn't work
 \else
 \usepackage{graphicx}
-\usepackage[ plainpages = false,
+\usepackage[plainpages = false,
 pdfpagelabels,
 pdfpagelayout = useoutlines,
 bookmarks,
@@ -53,13 +57,14 @@ bookmarksopen = true,
 bookmarksnumbered = true,
 breaklinks = true,
 linktocpage,
-pagebackref,
+% pagebackref,
 colorlinks = true,  % was true
-linkcolor = black,
-urlcolor  = blue,
-citecolor = red,
-anchorcolor = green,
+% linkcolor = black,
+% urlcolor  = blue,
+% citecolor = red,
+% anchorcolor = green,
 hyperindex = true,
+hidelinks
 ]{hyperref}
 \fi
 \pdfcompresslevel=9
@@ -134,7 +139,9 @@ hyperindex = true,
   \cleardoublepage
   \edef\x{\endgroup
     \noexpand\mainmatter
-    \setcounter{page}{\the\value{page}}%
+    \setcounter{page}{1}%
+    %\setcounter{page}{\the\value{page}}%
+    %\setcounter{secnumdepth}{-2}
   }%
   \x
 
@@ -192,7 +199,7 @@ hyperindex = true,
 {
 \thispagestyle{empty}
     \noindent
-     {\large \@title~-- \@subtitle\\}\\
+     {\large \@title~ \@subtitle\\}\\
      \noindent
      {\Large\@author}
 \cleardoublepage
